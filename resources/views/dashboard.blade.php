@@ -19,5 +19,5 @@
 
 @section('content')
 
-
+<h2>hozayfa</h2>
 @endsection
