@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@home')->name('homepage');
 
 Auth::routes();
 
@@ -21,6 +19,8 @@ Auth::routes();
 Route::group(['middleware' => ['auth', 'mobileVerified']], function(){
     
     Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
+    Route::resource('carrier-post', 'CarrierController');
+    Route::get('get-policestations', 'CarrierController@getPoliceStations');
 });
 Route::get('/home', 'HomeController@index')->name('home');
 
