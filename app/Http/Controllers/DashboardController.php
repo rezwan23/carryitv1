@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Verification;
 use Illuminate\Http\Request;
 
@@ -39,5 +40,26 @@ class DashboardController extends Controller
         ->delete();
 
         return redirect()->route('dashboard');
+    }
+
+    public function profile()
+    {
+        return view('profile', ['user' => auth()->user()]);
+    }
+
+    public function saveProfile(Request $request)
+    {
+        $request->validate(['name' => 'required', 'email' => 'email', 'image' => 'image|max:250']);
+        
+        $data = $request->only(['name', 'email']);
+        if($request->hasFile('image')){
+            $data['image'] = $request->file('image')->store('/');
+        }
+        
+        
+        $user = auth()->user();
+
+        $user->update($data);
+        return back()->with('success-message', 'Profile Updated!');
     }
 }

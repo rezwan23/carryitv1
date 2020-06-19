@@ -7,7 +7,7 @@
     @foreach($posts as $post)
     <div class="col-md-4">
         <div class="card">
-            <h4 class="card-header">{{$post->title}}</h4>
+            <h4 class="card-header">{{$post->title}} -- {{\Carbon\Carbon::parse($post->date)->format('d/m/Y H:i')}}</h4>
             <div class="card-body">
                 <h4>{{$post->user->name}} is going to {{$post->toDistrict->name}} from {{$post->fromDistrict->name}}</h6>
                     <div class="post_single_body">
@@ -26,6 +26,9 @@
                             <div class="col-md-12 text-center call_icon" onclick="callMobile(this)">
                                 <i class="fa fa-phone"></i>
                                 <p class="mobile_number">{{$post->user->mobile_number}}</p>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <a target="_blank" href="{{route('carrier-post.show', $post)}}" class="btn btn-sm btn-primary">Details</a>
                             </div>
                         </div>
                     </div>
@@ -48,6 +51,9 @@
         width: 41px;
         border-radius: 50%;
     }
+    .card{
+        margin-bottom: 30px;
+    }
 </style>
 
 @endsection
@@ -55,8 +61,8 @@
 @section('scripts')
 
 <script>
-    function callMobile(el){
-        let call ='tel:'+$(el).children('p.mobile_number').text();
+    function callMobile(el) {
+        let call = 'tel:' + $(el).children('p.mobile_number').text();
         window.open(call);
     }
 </script>

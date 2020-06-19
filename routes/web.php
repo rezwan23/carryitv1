@@ -17,12 +17,17 @@ Auth::routes();
 
 
 Route::group(['middleware' => ['auth', 'mobileVerified']], function(){
-    
-    Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
     Route::resource('carrier-post', 'CarrierController');
-    Route::get('get-policestations', 'CarrierController@getPoliceStations');
+    Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
+    Route::resource('request-post', 'RequestPostController');
+    Route::get('/profile', 'DashboardController@profile')->name('profile');
+    Route::post('/profile', 'DashboardController@saveProfile');
 });
+Route::resource('carrier-post', 'CarrierController');
+Route::get('get-policestations', 'CarrierController@getPoliceStations');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/search', 'HomeController@search')->name('search');
+Route::post('/search', 'HomeController@showResult')->name('search');
 
 Route::get('/unverified', 'DashboardController@unverified')->name('unverified');
 Route::post('/unverified', 'DashboardController@verify')->name('verify.mobile');

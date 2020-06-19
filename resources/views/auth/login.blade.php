@@ -27,7 +27,7 @@
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
           <div class="form-group">
             <label class="control-label">Email</label>
-            <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" placeholder="Email" autofocus>
+            <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" autofocus>
             @error('email')
                 <span class="text-danger">{{$message}}</span>
             @enderror

@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title', 'Carrier Post Create')
+@section('title', 'Request Post Create')
 
 
 @section('appTitle')
 <div class="app-title">
     <div>
-        <h1><i class="fa fa-dashboard"></i> Create Carrier Post</h1>
+        <h1><i class="fa fa-dashboard"></i> Create Request Post</h1>
         <p>Start a beautiful journey here</p>
     </div>
     <!-- <ul class="app-breadcrumb breadcrumb">
@@ -22,11 +22,11 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h4>Create Carrier Post</h4>
+        <h4>Create Request Post</h4>
     </div>
     <div class="col-md-12">
         @include('layouts.messages')
-        <form action="{{route('carrier-post.store')}}" method="post">
+        <form action="{{route('request-post.store')}}" method="post">
             @csrf
             <div class="row">
                 <div class="col-md-4">
@@ -40,9 +40,18 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="date">Date</label>
-                        <input name="date" type="datetime-local" class="form-control @error('date') is-invalid @enderror">
-                        @error('date')
+                        <label for="date">From Date</label>
+                        <input name="from_date" type="datetime-local" class="form-control @error('from_date') is-invalid @enderror">
+                        @error('from_date')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="date">To Date</label>
+                        <input name="to_date" type="datetime-local" class="form-control @error('to_date') is-invalid @enderror">
+                        @error('to_date')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
@@ -78,7 +87,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                     <div class="form-group">
                         <label for="date">Post Office</label>
                         <select class="form-control demoSelect" name="from_post_office_id" id="from_po">
@@ -88,8 +97,8 @@
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
-                </div>
-                <div class="col-md-4">
+                </div> -->
+                <!-- <div class="col-md-4">
                     <div class="form-group">
                         <label for="date">From Address Details</label>
                         <textarea name="from_address_details" class="form-control @error('from_address_details') is-invalid @enderror" id="" cols="30" rows="4"></textarea>
@@ -97,7 +106,7 @@
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -129,7 +138,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                     <div class="form-group">
                         <label for="date">Post Office</label>
                         <select class="form-control demoSelect" name="to_post_office_id" id="to_po">
@@ -148,12 +157,12 @@
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="date">Travel Description</label>
+                        <label for="date">Description</label>
                         <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="" cols="30" rows="4"></textarea>
                         @error('description')
                         <span class="text-danger">{{$message}}</span>

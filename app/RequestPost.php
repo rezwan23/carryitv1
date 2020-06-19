@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CarrierPost extends Model
+class RequestPost extends Model
 {
     protected $fillable = [
         'title', 'description', 'user_id', 'from_district_id', 
-        'from_police_station_id', 'from_post_office_id', 
-        'to_district_id', 'to_police_station_id', 'to_post_office_id', 
-        'date', 'from_address_details', 'to_address_details'
+        'from_police_station_id', 
+        'to_district_id', 'to_police_station_id',  
+        'from_date', 'to_date' 
     ];
 
     public static function boot()
@@ -38,11 +38,11 @@ class CarrierPost extends Model
     }
     public function toPS()
     {
-        return $this->belongsTo(PoliceStation::class, 'to_police_station_id');
+        return $this->belongsTo(PoliceStation::class, 'to_district_id', 'district_id');
     }
 
     public function fromPS()
     {
-        return $this->belongsTo(PoliceStation::class, 'from_police_station_id');
+        return $this->belongsTo(PoliceStation::class, 'from_district_id', 'district_id');
     }
 }

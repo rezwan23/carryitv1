@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title', 'Carrier Post Create')
+@section('title', 'Carrier Post Search')
 
 
 @section('appTitle')
 <div class="app-title">
     <div>
-        <h1><i class="fa fa-dashboard"></i> Create Carrier Post</h1>
+        <h1><i class="fa fa-search"></i> Search Carrier Post</h1>
         <p>Start a beautiful journey here</p>
     </div>
     <!-- <ul class="app-breadcrumb breadcrumb">
@@ -20,28 +20,18 @@
 
 @section('content')
 
-<div class="row">
+<div class="row @if($posts->count()>0) display_none @endif">
     <div class="col-md-12">
-        <h4>Create Carrier Post</h4>
+        <h4>Search Carrier Post</h4>
     </div>
     <div class="col-md-12">
         @include('layouts.messages')
-        <form action="{{route('carrier-post.store')}}" method="post">
-            @csrf
+        <form action="">
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="title">Title</label>
-                        <input name="title" type="text" class="form-control @error('title') is-invalid @enderror">
-                        @error('title')
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
                         <label for="date">Date</label>
-                        <input name="date" type="datetime-local" class="form-control @error('date') is-invalid @enderror">
+                        <input name="date" type="date" class="form-control @error('date') is-invalid @enderror">
                         @error('date')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
@@ -57,6 +47,7 @@
                         <label for="title">District</label>
                         <select class="form-control demoSelect" name="from_district_id" id="from_district_id" onchange="loadPoliceStations(0)">
                             <optgroup label="Select Cities">
+                                <option value="*">--</option>
                                 @foreach($districts as $discrict)
                                 <option value="{{$discrict->district_id}}">{{$discrict->name}}</option>
                                 @endforeach
@@ -89,15 +80,6 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="date">From Address Details</label>
-                        <textarea name="from_address_details" class="form-control @error('from_address_details') is-invalid @enderror" id="" cols="30" rows="4"></textarea>
-                        @error('from_address_details')
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
-                    </div>
-                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -108,6 +90,7 @@
                         <label for="title">District</label>
                         <select class="form-control demoSelect" name="to_district_id" id="to_district_id" onchange="loadPoliceStations(1)">
                             <optgroup label="Select Cities">
+                                <option value="*">--</option>
                                 @foreach($districts as $discrict)
                                 <option value="{{$discrict->district_id}}">{{$discrict->name}}</option>
                                 @endforeach
@@ -140,34 +123,54 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="date">To Address Details</label>
-                        <textarea name="to_address_details" class="form-control @error('to_address_details') is-invalid @enderror" id="" cols="30" rows="4"></textarea>
-                        @error('to_address_details')
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="date">Travel Description</label>
-                        <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="" cols="30" rows="4"></textarea>
-                        @error('description')
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
-                    </div>
-                </div>
             </div>
             <div class="row col-md-12">
-                <button class="btn btn-primary" type="submit">Post</button>
+                <button class="btn btn-primary" type="submit">Search</button>
             </div>
         </form>
     </div>
 </div>
 
+@if($posts->count()>0)
+<div class="row">
+    <div class="col-md-12">
+        <h2>Search Result</h2>
+        <a class="btn btn-primary" href="{{route('search')}}">Search Again</a>
+    </div>
+    @foreach($posts as $post)
+    <div class="col-md-4">
+        <div class="card">
+            <h4 class="card-header">{{$post->title}} -- {{\Carbon\Carbon::parse($post->date)->format('d/m/Y H:i')}}</h4>
+            <div class="card-body">
+                <h4>{{$post->user->name}} is going to {{$post->toDistrict->name}} from {{$post->fromDistrict->name}}</h6>
+                    <div class="post_single_body">
+                        <h6 class="text-center">Details</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>From</h6>
+                                <p>District : {{$post->fromDistrict->name}}</p>
+                                <p>Police Station : {{$post->fromPS->name}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>To</h6>
+                                <p>District : {{$post->toDistrict->name}}</p>
+                                <p>Police Station : {{$post->toPS->name}}</p>
+                            </div>
+                            <div class="col-md-12 text-center call_icon" onclick="callMobile(this)">
+                                <i class="fa fa-phone"></i>
+                                <p class="mobile_number">{{$post->user->mobile_number}}</p>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <a target="_blank" href="{{route('carrier-post.show', $post)}}" class="btn btn-sm btn-primary">Details</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+</div>
+@endif
 @endsection
 
 @section('scripts')
@@ -191,25 +194,63 @@
             $.get('/get-policestations?district_id=' + districtId, function(data) {
                 $('#to_ps').empty();
                 $('#to_po').empty();
+
+                $('#to_ps').append('<option value="*">--</option>');
+                $('#to_po').append('<option value="*">--</option>');
+
                 for (let i = 0; i < data[0].length; i++) {
                     $('#to_ps').append('<option value="' + data[0][i].id + '">' + data[0][i].name + '</option>');
                 }
                 for (let i = 0; i < data[1].length; i++) {
-                    $('#to_po').append('<option value="' + data[1][i].name + '">' + data[1][i].name + '</option>');
+                    $('#to_po').append('<option value="' + data[1][i].id + '">' + data[1][i].name + '</option>');
                 }
             });
         } else {
             $.get('/get-policestations?district_id=' + districtId, function(data) {
                 $('#from_ps').empty();
                 $('#from_po').empty();
+
+                $('#from_ps').append('<option value="*">--</option>');
+                $('#from_po').append('<option value="*">--</option>');
                 for (let i = 0; i < data[0].length; i++) {
                     $('#from_ps').append('<option value="' + data[0][i].id + '">' + data[0][i].name + '</option>');
                 }
                 for (let i = 0; i < data[1].length; i++) {
-                    $('#from_po').append('<option value="' + data[1][i].name + '">' + data[1][i].name + '</option>');
+                    $('#from_po').append('<option value="' + data[1][i].id + '">' + data[1][i].name + '</option>');
                 }
             });
         }
     }
+
+    function searchAgain(){
+        $('.row.display_none').removeClass('display_none')
+    }
 </script>
+
+<script>
+    function callMobile(el) {
+        let call = 'tel:' + $(el).children('p.mobile_number').text();
+        window.open(call);
+    }
+</script>
+@endsection
+
+
+@section('head')
+
+<style>
+    .call_icon i {
+        padding: 8px;
+        font-size: 25px;
+        background: #F86A43;
+        color: #fff;
+        height: 41px;
+        width: 41px;
+        border-radius: 50%;
+    }
+    .display_none{
+        display: none;
+    }
+</style>
+
 @endsection
