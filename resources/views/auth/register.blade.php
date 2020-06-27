@@ -31,7 +31,7 @@
             <h1>CarryIt</h1>
         </div>
         <div class="login-box">
-            <form class="login-form" action="{{ route('register') }}" method="post">
+            <form class="login-form" action="{{ route('register') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>REGISTER</h3>
                 <div class="form-group">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Email</label>
-                    <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" placeholder="Email" autofocus>
+                    <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" autofocus>
                     @error('email')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
@@ -52,6 +52,13 @@
                     <label class="control-label">Mobile Number</label>
                     <input class="form-control @error('mobile_number') is-invalid @enderror" type="text" name="mobile_number" placeholder="01...">
                     @error('mobile_number')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label class="control-label">NID</label>
+                    <input class="form-control @error('nid') is-invalid @enderror" type="file" name="nid">
+                    @error('nid')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>

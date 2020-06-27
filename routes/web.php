@@ -22,6 +22,8 @@ Route::group(['middleware' => ['auth', 'mobileVerified']], function(){
     Route::resource('request-post', 'RequestPostController');
     Route::get('/profile', 'DashboardController@profile')->name('profile');
     Route::post('/profile', 'DashboardController@saveProfile');
+    Route::get('/assign/{post}', 'DashboardController@assign')->name('assign');
+    Route::post('/assign/{post}', 'DashboardController@storeAssign')->name('carrier-post-assign');
 });
 Route::resource('carrier-post', 'CarrierController');
 Route::get('get-policestations', 'CarrierController@getPoliceStations');

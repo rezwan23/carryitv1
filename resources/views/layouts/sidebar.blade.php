@@ -2,7 +2,7 @@
     <aside class="app-sidebar">
       @auth 
 
-      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="/uploads/{{auth()->user()->image}}" width="60" height="60" alt="User Image">
+      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="/uploads/{{auth()->user()->image??'profile.png'}}" width="60" height="60" alt="User Image">
         <div>
           <p class="app-sidebar__user-name">{{auth()->user()->name}}</p>
         </div>

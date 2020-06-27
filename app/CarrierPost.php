@@ -45,4 +45,9 @@ class CarrierPost extends Model
     {
         return $this->belongsTo(PoliceStation::class, 'from_police_station_id');
     }
+
+    public function distance()
+    {
+        return Distance::where('from', $this->fromDistrict->name)->where('to', $this->toDistrict->name)->first()->distance;
+    }
 }

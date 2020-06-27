@@ -78,6 +78,11 @@
                             <th>Description</th>
                             <td>{{$post->description}}</td>
                         </tr>
+                        <tr>
+                            <td colspan=2>
+                                <a href="{{route('assign', $post)}}" class="btn btn-primary btn-sm">Assign</a>
+                            </td>
+                        </tr>
                     </thead>
                 </table>
             </div>
