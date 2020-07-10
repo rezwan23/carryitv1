@@ -24,6 +24,8 @@ Route::group(['middleware' => ['auth', 'mobileVerified']], function(){
     Route::post('/profile', 'DashboardController@saveProfile');
     Route::get('/assign/{post}', 'DashboardController@assign')->name('assign');
     Route::post('/assign/{post}', 'DashboardController@storeAssign')->name('carrier-post-assign');
+    Route::get('/assign/all/get', 'DashboardController@assignRequests')->name('carry.request');
+    Route::get('/assign/{carry}/accept', 'DashboardController@assignAccept')->name('assign.accept');
 });
 Route::resource('carrier-post', 'CarrierController');
 Route::get('get-policestations', 'CarrierController@getPoliceStations');
@@ -33,3 +35,5 @@ Route::post('/search', 'HomeController@showResult')->name('search');
 
 Route::get('/unverified', 'DashboardController@unverified')->name('unverified');
 Route::post('/unverified', 'DashboardController@verify')->name('verify.mobile');
+Route::get('/receive', 'HomeController@receiveShowForm')->name('receive.form');
+Route::post('/receive', 'HomeController@receive');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CarrierPost;
+use App\Carry;
 use App\District;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -60,5 +61,21 @@ class HomeController extends Controller
             return view('search', ['districts' => District::all(), 'posts' => $posts->get()]);
         }
         return view('search', ['districts' => District::all(), 'posts' => new Collection()]);
+    }
+
+    public function receiveShowForm()
+    {
+        return view('carrier.receive');
+    }
+
+    public function receive(Request $request)
+    {
+        $request->validate(['mobile_number' => 'required', 'passphrase' => 'required']);
+        $carry = Carry::where('received_by_mobile_number', $request->mobile_number)
+        ->where('passphrase', $request->passphrase)->first();
+
+        abort_if(!$carry, 404);
+        $carry->update(['status' => 'Delivered']);
+        return back()->with('success-message', 'Delivered!');
     }
 }

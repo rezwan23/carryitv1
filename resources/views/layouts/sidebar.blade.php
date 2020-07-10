@@ -18,6 +18,8 @@
         <li><a class="app-menu__item" href="{{route('request-post.index')}}"><i class="app-menu__icon fa fa-grav"></i><span class="app-menu__label">My Requests</span></a></li>
         <li><a class="app-menu__item" href="{{route('search')}}"><i class="app-menu__icon fa fa-search"></i><span class="app-menu__label">Search</span></a></li>
         <li><a class="app-menu__item" href="{{route('profile')}}"><i class="app-menu__icon fa fa-user"></i><span class="app-menu__label">Profile</span></a></li>
+        <li><a class="app-menu__item" href="{{route('carry.request')}}"><i class="app-menu__icon fa fa-bell"></i><span class="app-menu__label">Carry Requests</span></a></li>
+        <li><a class="app-menu__item" href="{{route('receive.form')}}"><i class="app-menu__icon fa fa-file"></i><span class="app-menu__label">Receive</span></a></li>
         
         <!-- <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">UI Elements</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">

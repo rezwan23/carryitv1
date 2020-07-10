@@ -108,4 +108,46 @@ class DashboardController extends Controller
         $sendstatus = $p[0];
         return back()->with('success-message', 'Your Carry Requested');
     }
+
+    public function assignRequests(Request $request)
+    {
+        $carryRequests = Carry::whereHas('carrierPost', function($q){
+            $q->where('user_id', auth()->user()->id);
+        })->get();
+        return view('carrier.requests', ['posts' => $carryRequests]);
+    }
+
+    public function assignAccept(Carry $carry)
+    {
+
+        $mobileNumbers = $carry->received_by_mobile_number;
+        $mobileNumbers .= ','.$carry->requestedBy->mobile_number;
+
+
+        $text = "Carry Request Accepted. Passphrase for CarryIT ".$carry->passphrase;
+
+
+
+        $url = "http://66.45.237.70/api.php";
+        
+        $number = $mobileNumbers;
+
+        $data = array(
+            'username' => "rezwan23",
+            'password' => "3YFRB4VD",
+            'number' => "$number",
+            'message' => "$text"
+        );
+
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|", $smsresult);
+        $sendstatus = $p[0];
+
+        $carry->update(['status' => 'Accepted']);
+        return back()->with('success-message', 'Requested Accepted');
+    }
 }
